@@ -1,6 +1,7 @@
 package ru.vsu.cs.eliseev;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 
 public class DrawUtils {
@@ -36,11 +37,16 @@ public class DrawUtils {
     }
 
     public static void drawTreeFirstType(Graphics2D g, Tree tree) {
-        g.setColor(tree.colorOfStump);
         Position pos = tree.positionOfStump;
-        g.fillRect(pos.x, pos.y, tree.length / 10, tree.length / 4);
         g.setColor(tree.colorOfLeaves);
-        g.fillOval(pos.x - tree.length / 9, pos.y - tree.length * 4 / 5, tree.length / 3, tree.length * 5 / 6);
+        g.fillOval(pos.x - tree.length * 3  / 10, pos.y - tree.length * 3  / 10, tree.length * 2 / 5, tree.length *2 / 5);
+        g.fillOval(pos.x + tree.length / 30, pos.y - tree.length * 3  / 10, tree.length * 2 / 5, tree.length *2 / 5);
+        g.fillOval(pos.x - tree.length / 7, pos.y - tree.length / 2, tree.length * 2 / 5, tree.length *2 / 5);
+        g.setColor(tree.colorOfStump);
+        g.fillRect(pos.x, pos.y, tree.length / 10, tree.length * 4 / 9);
+        g.fillPolygon(new int[]{pos.x + tree.length / 40, pos.x + tree.length * 3 / 40, pos.x + tree.length * 3 / 40, pos.x + tree.length / 40 }, new int[]{pos.y, pos.y, pos.y - tree.length / 3, pos.y - tree.length / 3  }, 4);
+        g.fillPolygon(new int[]{pos.x + tree.length * 3 / 40, pos.x + tree.length / 10, pos.x + tree.length / 4 + tree.length / 40, pos.x + tree.length / 4 }, new int[]{pos.y, pos.y + tree.length / 40, pos.y - tree.length / 4 + tree.length / 40, pos.y - tree.length / 4  }, 4);
+        g.fillPolygon(new int[]{pos.x + tree.length / 40, pos.x, pos.x - tree.length * 3 / 20 - tree.length / 40, pos.x - tree.length  * 3 / 20}, new int[]{pos.y, pos.y + tree.length / 40, pos.y - tree.length / 4 + tree.length / 40, pos.y - tree.length / 4  }, 4);
     }
 
     public static void drawTreeSecondType(Graphics2D g, Tree tree) {
@@ -55,4 +61,18 @@ public class DrawUtils {
         g.fillOval((int) (pos.x - tree.length / 4.6), (int) (pos.y - tree.length / 2.5), (int) (tree.length / 3.2), (int) (tree.length / 3.2));
         g.fillOval(pos.x - tree.length / 10, pos.y - tree.length / 2, tree.length / 4, tree.length / 4);
     }
+
+    public static void drawTypha(Graphics2D g, Typha typha) {
+        g.setColor(typha.colorOfLeaves);
+        Position pos = typha.position;
+        g.fillRect(pos.x, pos.y, typha.length / 15, typha.length * 2 / 3);
+        g.setColor(typha.colorOfHead);
+        g.fillOval(pos.x - typha.length / 20, pos.y - typha.length * 7/ 15, typha.length / 6, typha.length / 2);
+        AffineTransform old = g.getTransform();
+        g.setColor(typha.colorOfLeaves);
+        g.rotate(Math.toRadians(-14.5));
+        g.fillOval(pos.x - typha.length, pos.y + typha.length / 2, typha.length / 10, typha.length / 2);
+        g.setTransform(old);
+    }
+
 }
