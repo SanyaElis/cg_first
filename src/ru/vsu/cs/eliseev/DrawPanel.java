@@ -6,12 +6,13 @@ import java.util.Random;
 
 public class DrawPanel extends JPanel {
     private static final Color SKY_COLOR = new Color(16, 16, 171);
-    private static final Color GROUND_COLOR = new Color(100,200,100);
+    private static final Color GROUND_COLOR = new Color(100, 200, 100);
     private static final Color LAKE_COLOR = new Color(21, 123, 197, 255);
     private static final Color LEAVES_COLOR = new Color(225, 202, 46, 255);
     private static final Color LEAVES_COLOR_SECOND = new Color(25, 255, 0, 255);
     private static final Color STUMP_COLOR = new Color(65, 45, 10, 255);
-    private static final Color TYPHA_COLOR = new Color(228,217,111, 255);
+    private static final Color CUT_COLOR = new Color(185, 130, 34, 255);
+    private static final Color TYPHA_COLOR = new Color(228, 217, 111, 255);
 
     private static final Random rnd = new Random();
     private static Timer timer;
@@ -31,5 +32,7 @@ public class DrawPanel extends JPanel {
         DrawUtils.drawTreeFirstType(g2d, testTree2);
         Typha testTypha = new Typha(100, TYPHA_COLOR, STUMP_COLOR, new Position(200, 300));
         DrawUtils.drawTypha(g2d, testTypha);
+        Stump testStump = new Stump(new Position(400, 300), STUMP_COLOR, CUT_COLOR, 20, 200);
+        DrawUtils.drawStump(g2d, testStump);
     }
 }

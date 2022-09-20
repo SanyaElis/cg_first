@@ -39,14 +39,14 @@ public class DrawUtils {
     public static void drawTreeFirstType(Graphics2D g, Tree tree) {
         Position pos = tree.positionOfStump;
         g.setColor(tree.colorOfLeaves);
-        g.fillOval(pos.x - tree.length * 3  / 10, pos.y - tree.length * 3  / 10, tree.length * 2 / 5, tree.length *2 / 5);
-        g.fillOval(pos.x + tree.length / 30, pos.y - tree.length * 3  / 10, tree.length * 2 / 5, tree.length *2 / 5);
-        g.fillOval(pos.x - tree.length / 7, pos.y - tree.length / 2, tree.length * 2 / 5, tree.length *2 / 5);
+        g.fillOval(pos.x - tree.length * 3 / 10, pos.y - tree.length * 3 / 10, tree.length * 2 / 5, tree.length * 2 / 5);
+        g.fillOval(pos.x + tree.length / 30, pos.y - tree.length * 3 / 10, tree.length * 2 / 5, tree.length * 2 / 5);
+        g.fillOval(pos.x - tree.length / 7, pos.y - tree.length / 2, tree.length * 2 / 5, tree.length * 2 / 5);
         g.setColor(tree.colorOfStump);
         g.fillRect(pos.x, pos.y, tree.length / 10, tree.length * 4 / 9);
-        g.fillPolygon(new int[]{pos.x + tree.length / 40, pos.x + tree.length * 3 / 40, pos.x + tree.length * 3 / 40, pos.x + tree.length / 40 }, new int[]{pos.y, pos.y, pos.y - tree.length / 3, pos.y - tree.length / 3  }, 4);
-        g.fillPolygon(new int[]{pos.x + tree.length * 3 / 40, pos.x + tree.length / 10, pos.x + tree.length / 4 + tree.length / 40, pos.x + tree.length / 4 }, new int[]{pos.y, pos.y + tree.length / 40, pos.y - tree.length / 4 + tree.length / 40, pos.y - tree.length / 4  }, 4);
-        g.fillPolygon(new int[]{pos.x + tree.length / 40, pos.x, pos.x - tree.length * 3 / 20 - tree.length / 40, pos.x - tree.length  * 3 / 20}, new int[]{pos.y, pos.y + tree.length / 40, pos.y - tree.length / 4 + tree.length / 40, pos.y - tree.length / 4  }, 4);
+        g.fillPolygon(new int[]{pos.x + tree.length / 40, pos.x + tree.length * 3 / 40, pos.x + tree.length * 3 / 40, pos.x + tree.length / 40}, new int[]{pos.y, pos.y, pos.y - tree.length / 3, pos.y - tree.length / 3}, 4);
+        g.fillPolygon(new int[]{pos.x + tree.length * 3 / 40, pos.x + tree.length / 10, pos.x + tree.length / 4 + tree.length / 40, pos.x + tree.length / 4}, new int[]{pos.y, pos.y + tree.length / 40, pos.y - tree.length / 4 + tree.length / 40, pos.y - tree.length / 4}, 4);
+        g.fillPolygon(new int[]{pos.x + tree.length / 40, pos.x, pos.x - tree.length * 3 / 20 - tree.length / 40, pos.x - tree.length * 3 / 20}, new int[]{pos.y, pos.y + tree.length / 40, pos.y - tree.length / 4 + tree.length / 40, pos.y - tree.length / 4}, 4);
     }
 
     public static void drawTreeSecondType(Graphics2D g, Tree tree) {
@@ -67,12 +67,30 @@ public class DrawUtils {
         Position pos = typha.position;
         g.fillRect(pos.x, pos.y, typha.length / 15, typha.length * 2 / 3);
         g.setColor(typha.colorOfHead);
-        g.fillOval(pos.x - typha.length / 20, pos.y - typha.length * 7/ 15, typha.length / 6, typha.length / 2);
+        g.fillOval(pos.x - typha.length / 20, pos.y - typha.length * 7 / 15,
+                typha.length / 6, typha.length / 2);
         AffineTransform old = g.getTransform();
         g.setColor(typha.colorOfLeaves);
         g.rotate(Math.toRadians(-14.5));
-        g.fillOval(pos.x - typha.length, pos.y + typha.length / 2, typha.length / 10, typha.length / 2);
+        g.fillOval(pos.x - typha.length, pos.y + typha.length / 2,
+                typha.length / 10, typha.length / 2);
         g.setTransform(old);
+    }
+
+    public static void drawStump(Graphics2D g, Stump stump) {
+        g.setColor(stump.colorOfStump);
+        Position pos = stump.position;
+        g.fillRect(pos.x, pos.y, stump.length * 2 / 3, stump.length);
+        g.fillOval(pos.x, pos.y + stump.length * 9 / 10, stump.length * 2 / 3, stump.length / 5);
+        g.setColor(stump.colorOfCut);
+        g.fillOval(pos.x, pos.y - stump.length / 6, stump.length * 2 / 3, stump.length / 3);
+        g.setColor(stump.colorOfStump);
+        int deltaX = stump.length * 2 / (3 * stump.age);
+        int deltaY = stump.length / (3 * stump.age);
+        for (int i = 1; i <= stump.age; i++) {
+            g.drawOval(pos.x + i * deltaX, pos.y - stump.length / 6 + i * deltaY,
+                    stump.length * 2 / 3 - deltaX * 2 * i, stump.length / 3 - deltaY * 2 * i);
+        }
     }
 
 }
