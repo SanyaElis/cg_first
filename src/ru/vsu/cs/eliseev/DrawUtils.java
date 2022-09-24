@@ -2,7 +2,7 @@ package ru.vsu.cs.eliseev;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
+
 
 public class DrawUtils {
     public static void drawSun(Graphics2D g, int x, int y, int r, int l, int n, Color c) {
@@ -23,7 +23,8 @@ public class DrawUtils {
         }
     }
 
-    public static void drawLake(Graphics2D g, Color c, int height, int width) {
+    //800 600
+    public static void drawLake(Graphics2D g, Color c, int height, int width) {//todo поколдовать с размерами
         g.setColor(new Color(100, 200, 100));
 
         //g.fillRect(350, 270, 450, 350);
@@ -31,10 +32,29 @@ public class DrawUtils {
         g.setColor(Color.CYAN);
         g.fillRect(0, 0, width, height / 3);
         g.setColor(c);
-        g.fillOval(200, 230, 600, 400);
-        g.fillOval(400, 220, 600, 400);
+//        g.fillOval(200, 230, 600, 400);
+//        g.fillOval(400, 220, 600, 400);
+        g.fillOval(width / 3, height / 3, width * 3 / 4, height * 2 / 3);
+        g.fillOval(width / 2, height / 3, width * 3 / 4, height * 2 / 3);
+        Oval oval1 = new Oval(width * 3 / 8, height * 2 / 6, width / 3 + width * 3 / 8, height / 3 + height * 2 / 6);
+        Oval oval2 = new Oval(width * 3 / 8, height * 2 / 6, width / 2 + width * 3 / 8, height / 3 + height * 2 / 6);
+        for (int i = width / 3; i < width; i += width / 6) {
+            for (int j = height / 3; j < height * 4 / 5; j += height / 10) {
+                if (oval1.IsPointInOval(i, j) || oval2.IsPointInOval(i, j)) {
+//                    System.out.printf("(%d ,%d)\n", i, j);
+//                    g.drawOval(i, j, 2, 2);
+                    drawWaterLily(g, 50, new Position(i, j));
+                }
+            }
+        }
 
     }
+
+    public static void drawWaterLily(Graphics2D g, int length, Position position) {
+        g.setColor(new Color(0, 149, 3));
+        g.fillArc(position.x, position.y, length, length * 4 / 5, 45, 315);
+    }
+
 
     public static void drawTreeFirstType(Graphics2D g, Tree tree) {
         Position pos = tree.positionOfStump;
@@ -75,6 +95,9 @@ public class DrawUtils {
         g.fillOval(pos.x - typha.length, pos.y + typha.length / 2,
                 typha.length / 10, typha.length / 2);
         g.setTransform(old);
+//        g.setColor(Color.black);
+//        g.fillArc(pos.x, pos.y,  typha.length / 2, typha.length / 6, 45, 180);
+//        g.fillArc(pos.x - typha.length / 2, pos.y - typha.length / 6,  typha.length / 2, typha.length / 6, 225, 90);
     }
 
     public static void drawStump(Graphics2D g, Stump stump) {

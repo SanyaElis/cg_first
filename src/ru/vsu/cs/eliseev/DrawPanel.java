@@ -33,6 +33,7 @@ public class DrawPanel extends JPanel {
         Typha testTypha = new Typha(100, TYPHA_COLOR, STUMP_COLOR, new Position(200, 300));
         DrawUtils.drawTypha(g2d, testTypha);
         Stump testStump = new Stump(new Position(400, 300), STUMP_COLOR, CUT_COLOR, 20, 200);
-        DrawUtils.drawStump(g2d, testStump);
+//        DrawUtils.drawStump(g2d, testStump);
+        DrawUtils.drawWaterLily(g2d, 50, new Position(300, 400));
     }
 }
