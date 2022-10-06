@@ -1,7 +1,6 @@
 package ru.vsu.cs.eliseev;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 
 public class DrawUtils {
@@ -23,17 +22,18 @@ public class DrawUtils {
         }
     }
 
-    //800 600
-    public static void drawLake(Graphics2D g, Color c, int height, int width) {//todo поколдовать с размерами
+    public static void drawLake(Graphics2D g, Color c, int height, int width) {
+        int rgb = 10;
+        int currHeight = 0;
+        for (int i = 0; i < 15; i++) {
+            g.setColor(new Color(96 + rgb, 163, 192));
+            g.fillRect(0, currHeight, width, currHeight + height / 18);
+            currHeight = currHeight + height / 18;
+            rgb += 10;
+        }
         g.setColor(new Color(100, 200, 100));
-
-        //g.fillRect(350, 270, 450, 350);
         g.fillRect(0, height / 3, width, height);
-        g.setColor(Color.CYAN);
-        g.fillRect(0, 0, width, height / 3);
         g.setColor(c);
-//        g.fillOval(200, 230, 600, 400);
-//        g.fillOval(400, 220, 600, 400);
         g.fillOval(width / 3, height / 3, width * 3 / 4, height * 2 / 3);
         g.fillOval(width / 2, height / 3, width * 3 / 4, height * 2 / 3);
         Oval oval1 = new Oval(width * 3 / 8, height * 2 / 6, width / 3 + width * 3 / 8, height / 3 + height * 2 / 6);
@@ -41,13 +41,17 @@ public class DrawUtils {
         for (int i = width / 3; i < width; i += width / 6) {
             for (int j = height / 3; j < height * 4 / 5; j += height / 10) {
                 if (oval1.IsPointInOval(i, j) || oval2.IsPointInOval(i, j)) {
-//                    System.out.printf("(%d ,%d)\n", i, j);
-//                    g.drawOval(i, j, 2, 2);
                     drawWaterLily(g, 50, new Position(i, j));
                 }
             }
         }
-
+        int[] yPoints;
+        for (int i = width / 3 + 30; i < width * 3 / 4; i += 30) {
+            yPoints = oval1.PointOnOval(i);
+            g.setColor(Color.BLACK);
+            drawTypha(g, new Typha(80, DrawPanel.TYPHA_COLOR, DrawPanel.STUMP_COLOR, new Position(i, yPoints[0])));
+            drawTypha(g, new Typha(100, DrawPanel.TYPHA_COLOR, DrawPanel.STUMP_COLOR, new Position(i, yPoints[1])));
+        }
     }
 
     public static void drawWaterLily(Graphics2D g, int length, Position position) {
@@ -85,19 +89,10 @@ public class DrawUtils {
     public static void drawTypha(Graphics2D g, Typha typha) {
         g.setColor(typha.colorOfLeaves);
         Position pos = typha.position;
-        g.fillRect(pos.x, pos.y, typha.length / 15, typha.length * 2 / 3);
+        g.fillRect(pos.x, pos.y - typha.length * 2 / 3, typha.length / 15, typha.length * 2 / 3);
         g.setColor(typha.colorOfHead);
-        g.fillOval(pos.x - typha.length / 20, pos.y - typha.length * 7 / 15,
+        g.fillOval(pos.x - typha.length / 20, pos.y - typha.length * 7 / 15 - typha.length * 2 / 3,
                 typha.length / 6, typha.length / 2);
-        AffineTransform old = g.getTransform();
-        g.setColor(typha.colorOfLeaves);
-        g.rotate(Math.toRadians(-14.5));
-        g.fillOval(pos.x - typha.length, pos.y + typha.length / 2,
-                typha.length / 10, typha.length / 2);
-        g.setTransform(old);
-//        g.setColor(Color.black);
-//        g.fillArc(pos.x, pos.y,  typha.length / 2, typha.length / 6, 45, 180);
-//        g.fillArc(pos.x - typha.length / 2, pos.y - typha.length / 6,  typha.length / 2, typha.length / 6, 225, 90);
     }
 
     public static void drawStump(Graphics2D g, Stump stump) {

@@ -30,7 +30,11 @@ public class Oval {
      * @param x
      * @return точка для рисования рогоза
      */
-    public static int PointOnOval(int x){
-        return 0;
+
+    public int[] PointOnOval(int x){
+        double c = 1.0 * (x - x0) * (x - x0) / (a * a);
+        int y1 = (int) (y0 - b * Math.sqrt(1 - c));
+        int y2 = (int) (y0 + b * Math.sqrt(1 - c));
+        return new int[]{y1, y2};
     }
 }

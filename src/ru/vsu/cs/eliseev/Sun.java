@@ -14,7 +14,9 @@ public class Sun {
         this.numOfRays = numOfRays;
         this.color = color;
     }
-
+    public void drawSun(Graphics2D g2d){
+        DrawUtils.drawSun(g2d, pos.x, pos.y, radius, lengthOfaRay, numOfRays, color);
+    }
 
     public Position getPos() {
         return pos;
